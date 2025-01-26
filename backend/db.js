@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const todoschema = mongoose.schema({
+const todoschema = mongoose.Schema({
   title: String,
   description: String,
   completed: Boolean,

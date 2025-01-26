@@ -1,6 +1,9 @@
-const express = require("express");
-const { createTodo } = require("./types");
-const { todo } = require("./db");
+// const express = require("express");
+// const { createTodo, updateTodo } = require("./types");
+// const { todo } = require("./db");
+import express from "express";
+import { createTodo, updateTodo } from "./types.js";
+import { todo } from "./db.js";
 const app = express();
 
 app.use(express.json());
@@ -12,18 +15,18 @@ app.post("/todo", async function (req, res) {
     res.status(411).json({
       msg: "You sent the wrong inputs",
     });
+    return;
   }
-});
+  //put it in mongodb
+  await todo.create({
+    title: createPayload.title,
+    description: createPayload.description,
+    completed: false,
+  });
 
-//put it in mongodb
-await todo.create({
-  title: createPayload.title,
-  description: createPayload.description,
-  completed: false,
-});
-
-res.json({
-  msg: "Todo Created",
+  res.json({
+    msg: "Todo Created",
+  });
 });
 
 app.get("/todos", async function (req, res) {
